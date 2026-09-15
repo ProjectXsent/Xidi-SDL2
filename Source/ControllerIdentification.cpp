@@ -22,6 +22,8 @@
 #include <Infra/Core/Strings.h>
 #include <Infra/Core/TemporaryBuffer.h>
 
+#include <SDL.h>
+
 #include "ApiBitSet.h"
 #include "ApiDirectInput.h"
 #include "Globals.h"

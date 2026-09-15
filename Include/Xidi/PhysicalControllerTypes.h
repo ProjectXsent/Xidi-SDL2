@@ -19,7 +19,8 @@ namespace Xidi
 {
   namespace Controller
   {
-    /// Maximum possible reading from an analog stick. Value based on XInput documentation.
+    /// Maximum possible reading from an analog stick. Value based on the 16-bit signed range used
+    /// by XInput and, not coincidentally, by SDL2's game controller axes as well.
     inline constexpr int32_t kAnalogValueMax = 32767;
 
     /// Minimum possible reading from an analog stick. Value derived from the above to ensure
@@ -29,7 +30,9 @@ namespace Xidi
     /// Neutral value for an analog stick. Value computed from extreme value constants above.
     inline constexpr int32_t kAnalogValueNeutral = (kAnalogValueMax + kAnalogValueMin) / 2;
 
-    /// Maximum possible reading for an analog trigger. Value based on XInput documentation.
+    /// Maximum possible reading for an analog trigger. Value based on XInput documentation. A
+    /// backend whose native trigger range differs, such as SDL2's 0 to 32767, is responsible for
+    /// scaling its readings to fit this internal representation.
     inline constexpr int32_t kTriggerValueMax = 255;
 
     /// Minimum possible reading for an analog trigger. Value based on XInput documentation.
@@ -80,8 +83,12 @@ namespace Xidi
 
     /// Enumerates all digital buttons that might be present on a physical controller. As an
     /// implementation simplification, the order of enumerators corresponds to the ordering used in
-    /// XInput. One enumerator exists per possible button. Guide and Share buttons are not actually
-    /// used, but they still have space allocated for them on a speculative basis.
+    /// XInput. This is a superset of the button set exposed by SDL2's game controller API, whose
+    /// SDL_GameControllerButton values map onto the same Xbox-style semantics even though SDL does
+    /// not use the same bit layout internally, so a backend built on SDL2 maps buttons explicitly
+    /// rather than relying on bit-for-bit compatibility. One enumerator exists per possible button.
+    /// Guide and Share buttons are not actually used, but they still have space allocated for them
+    /// on a speculative basis.
     enum class EPhysicalButton : uint8_t
     {
       DpadUp,
@@ -275,7 +282,10 @@ namespace Xidi
          (1u << static_cast<unsigned int>(EPhysicalTrigger::RT)));
 
     /// Pre-defined constant representing the standard set of buttons, as documented in the
-    /// XInput API, supported in a physical controller capabilities data structure.
+    /// XInput API, supported in a physical controller capabilities data structure. Despite the
+    /// name, this is also the appropriate set for backends that are not XInput itself, such as one
+    /// built on SDL2's game controller API, since both expose the same Xbox-style button set minus
+    /// the Guide and Share buttons.
     inline constexpr unsigned int kPhysicalCapabilitiesStandardXInputButtons =
         ((1u << static_cast<unsigned int>(EPhysicalButton::DpadUp)) |
          (1u << static_cast<unsigned int>(EPhysicalButton::DpadDown)) |
@@ -314,7 +324,9 @@ namespace Xidi
 
     /// Pre-defined constant representing the standard set of force feedback actuators, as
     /// documented in the XInput API, supported in a physical controller capabilities data
-    /// structure.
+    /// structure. As with the button constant above, this set also applies to non-XInput backends
+    /// such as SDL2, whose SDL_GameControllerRumble function drives the same pair of low- and
+    /// high-frequency motors and has no notion of impulse triggers.
     inline constexpr unsigned int kPhysicalCapabilitiesStandardXInputForceFeedbackActuators =
         ((1u << static_cast<unsigned int>(EForceFeedbackActuator::LeftMotor)) |
          (1u << static_cast<unsigned int>(EForceFeedbackActuator::RightMotor)));
