@@ -27,7 +27,8 @@
 #include "ImportApiWinMM.h"
 #include "Mapper.h"
 #include "PhysicalControllerBackend.h"
-#include "PhysicalControllerBackendSDL2.h"
+//#include "PhysicalControllerBackendXInput.h"
+#include "PhysicalControllerBackendSDL3.h"
 #include "PhysicalControllerTypes.h"
 #include "PluginRegistry.h"
 #include "Strings.h"
@@ -327,7 +328,7 @@ namespace Xidi
                                                    .ValueOr(L"");
             physicalControllerBackend =
                 ((true == selectedBackend.empty())
-                     ? new PhysicalControllerBackendSDL2()
+                     ? new PhysicalControllerBackendSDL3()
                      : GetPhysicalControllerBackendInterface(selectedBackend));
 
             if (nullptr == physicalControllerBackend)
@@ -337,7 +338,7 @@ namespace Xidi
                   L"Physical controller backend \"%.*s\" could not be located. Using the built-in default backend instead.",
                   static_cast<int>(selectedBackend.length()),
                   selectedBackend.data());
-              physicalControllerBackend = new PhysicalControllerBackendSDL2();
+              physicalControllerBackend = new PhysicalControllerBackendSDL3();
             }
 
             const bool backendInitializationResult = physicalControllerBackend->Initialize();
@@ -348,7 +349,7 @@ namespace Xidi
                   L"Physical controller backend \"%.*s\" failed to initialize. Using the built-in default backend instead.",
                   static_cast<int>(selectedBackend.length()),
                   selectedBackend.data());
-              physicalControllerBackend = new PhysicalControllerBackendSDL2();
+              physicalControllerBackend = new PhysicalControllerBackendSDL3();
             }
 
             isInitialized = true;
