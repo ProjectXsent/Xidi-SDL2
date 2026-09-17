@@ -13,6 +13,9 @@ Xidi is implemented as a library that games should load instead of the system-su
 
 - Allows controllers to be changed while a game is running. Older games do not normally support this, but with Xidi controllers can be plugged in, unplugged, and swapped seamlessly during gameplay. Without Xidi this would require exiting and restarting the game.
 
+## [Xidi Game Configurations](https://github.com/ProjectXsent/XidiGameConfigurations)
+
+- List of games that can be played using Xidi so far.
 
 ## Limitations
 
