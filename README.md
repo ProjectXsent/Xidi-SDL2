@@ -15,7 +15,7 @@ Xidi is implemented as a library that games should load instead of the system-su
 
 ## [Xidi Game Configurations](https://github.com/ProjectXsent/XidiGameConfigurations)
 
-- List of games that can be played using Xidi so far.
+- List of games that works with Xidi so far.
 
 ## Limitations
 
