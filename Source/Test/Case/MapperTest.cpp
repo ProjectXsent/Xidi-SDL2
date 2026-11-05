@@ -63,7 +63,12 @@ namespace XidiTest
        .buttonLS = std::make_unique<MockElementMapper>(),
        .buttonRS = std::make_unique<MockElementMapper>(),
        .buttonGuide = std::make_unique<MockElementMapper>(),
-       .buttonShare = std::make_unique<MockElementMapper>()});
+       .buttonMisc1 = std::make_unique<MockElementMapper>(),
+       .buttonTouchpad = std::make_unique<MockElementMapper>(),
+       .buttonRightPaddle1 = std::make_unique<MockElementMapper>(),
+       .buttonLeftPaddle1 = std::make_unique<MockElementMapper>(),
+       .buttonRightPaddle2 = std::make_unique<MockElementMapper>(),
+       .buttonLeftPaddle2 = std::make_unique<MockElementMapper>()});
 
   /// Empty force feedback actuator map. Mappers have a default force feedback actuator map, so this
   /// constant can be used at construction time to replace it with a totally empty map.
@@ -808,7 +813,7 @@ namespace XidiTest
               {.type = EAxis::Z},
               {.type = EAxis::RotZ}},
          .numAxes = 4,
-         .numButtons = 12,
+         .numButtons = 19,
          .hasPov = true});
 
     const Mapper* const mapper = Mapper::GetByName(L"StandardGamepad");
@@ -828,7 +833,7 @@ namespace XidiTest
               {.type = EAxis::Z},
               {.type = EAxis::RotZ}},
          .numAxes = 4,
-         .numButtons = 12,
+         .numButtons = 19,
          .hasPov = false});
 
     const Mapper* const mapper = Mapper::GetByName(L"DigitalGamepad");
@@ -850,7 +855,7 @@ namespace XidiTest
               {.type = EAxis::RotY},
               {.type = EAxis::RotZ}},
          .numAxes = 6,
-         .numButtons = 10,
+         .numButtons = 17,
          .hasPov = true});
 
     const Mapper* const mapper = Mapper::GetByName(L"ExtendedGamepad");
@@ -872,7 +877,7 @@ namespace XidiTest
               {.type = EAxis::RotY},
               {.type = EAxis::RotZ}},
          .numAxes = 6,
-         .numButtons = 10,
+         .numButtons = 17,
          .hasPov = true});
 
     const Mapper* const mapper = Mapper::GetByName(L"XInputNative");
@@ -893,7 +898,7 @@ namespace XidiTest
               {.type = EAxis::RotX},
               {.type = EAxis::RotY}},
          .numAxes = 5,
-         .numButtons = 10,
+         .numButtons = 17,
          .hasPov = true});
 
     const Mapper* const mapper = Mapper::GetByName(L"XInputSharedTriggers");
@@ -916,7 +921,7 @@ namespace XidiTest
               {.type = EAxis::Z},
               {.type = EAxis::RotZ}},
          .numAxes = 4,
-         .numButtons = 12,
+         .numButtons = 19,
          .hasPov = true});
 
     Mapper::UElementMap clonedElementMap = Mapper::GetByName(L"StandardGamepad")->CloneElementMap();
@@ -939,7 +944,7 @@ namespace XidiTest
              {{.type = EAxis::X, .supportsForceFeedback = true},
               {.type = EAxis::Y, .supportsForceFeedback = true}},
          .numAxes = 2,
-         .numButtons = 12,
+         .numButtons = 19,
          .hasPov = false});
 
     Mapper::UElementMap clonedElementMap = Mapper::GetByName(L"DigitalGamepad")->CloneElementMap();
@@ -964,7 +969,7 @@ namespace XidiTest
               {.type = EAxis::Z},
               {.type = EAxis::RotZ}},
          .numAxes = 4,
-         .numButtons = 10,
+         .numButtons = 17,
          .hasPov = true});
 
     Mapper::UElementMap clonedElementMap = Mapper::GetByName(L"ExtendedGamepad")->CloneElementMap();
@@ -991,7 +996,7 @@ namespace XidiTest
               {.type = EAxis::RotY},
               {.type = EAxis::RotZ}},
          .numAxes = 6,
-         .numButtons = 10,
+         .numButtons = 17,
          .hasPov = false});
 
     Mapper::UElementMap clonedElementMap = Mapper::GetByName(L"XInputNative")->CloneElementMap();
@@ -1018,7 +1023,7 @@ namespace XidiTest
               {.type = EAxis::RotX},
               {.type = EAxis::RotY}},
          .numAxes = 4,
-         .numButtons = 10,
+         .numButtons = 17,
          .hasPov = true});
 
     Mapper::UElementMap clonedElementMap =
@@ -1456,8 +1461,18 @@ namespace XidiTest
          .expectedRequirement = EPhysicalButton::RB},
         {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonGuide),
          .expectedRequirement = EPhysicalButton::Guide},
-        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonShare),
-         .expectedRequirement = EPhysicalButton::Share},
+        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonMisc1),
+         .expectedRequirement = EPhysicalButton::Misc1},
+        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonTouchpad),
+         .expectedRequirement = EPhysicalButton::Touchpad},
+        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonRightPaddle1),
+         .expectedRequirement = EPhysicalButton::RightPaddle1},
+        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonLeftPaddle1),
+         .expectedRequirement = EPhysicalButton::LeftPaddle1},
+        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonRightPaddle2),
+         .expectedRequirement = EPhysicalButton::RightPaddle2},
+        {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonLeftPaddle2),
+         .expectedRequirement = EPhysicalButton::LeftPaddle2},
         {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonA),
          .expectedRequirement = EPhysicalButton::A},
         {.elementMapIndex = ELEMENT_MAP_INDEX_OF(buttonB),

@@ -87,8 +87,9 @@ namespace Xidi
     /// SDL_GameControllerButton values map onto the same Xbox-style semantics even though SDL does
     /// not use the same bit layout internally, so a backend built on SDL2 maps buttons explicitly
     /// rather than relying on bit-for-bit compatibility. One enumerator exists per possible button.
-    /// Guide and Share buttons are not actually used, but they still have space allocated for them
-    /// on a speculative basis.
+    /// Guide is only reported by backends that can see it. The enumerators after Y
+    /// were added to expose the extra buttons available through SDL's gamepad API. They are
+    /// appended so that the existing bit positions do not change.
     enum class EPhysicalButton : uint8_t
     {
       DpadUp,
@@ -102,11 +103,29 @@ namespace Xidi
       LB,
       RB,
       Guide,
-      Share,
       A,
       B,
       X,
       Y,
+
+      /// Additional button, SDL_GAMEPAD_BUTTON_MISC1 (Xbox Share, PS5 microphone, Switch capture),
+      /// which takes the place of the Share button found in older versions of this enumeration
+      Misc1,
+
+      /// Touchpad click, SDL_GAMEPAD_BUTTON_TOUCHPAD
+      Touchpad,
+
+      /// Upper right paddle (Xbox Elite P1), SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1
+      RightPaddle1,
+
+      /// Upper left paddle (Xbox Elite P3), SDL_GAMEPAD_BUTTON_LEFT_PADDLE1
+      LeftPaddle1,
+
+      /// Lower right paddle (Xbox Elite P2), SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2
+      RightPaddle2,
+
+      /// Lower left paddle (Xbox Elite P4), SDL_GAMEPAD_BUTTON_LEFT_PADDLE2
+      LeftPaddle2,
 
       /// Sentinel value, total number of enumerators
       Count
@@ -316,11 +335,32 @@ namespace Xidi
          (1u << static_cast<unsigned int>(EPhysicalButton::LB)) |
          (1u << static_cast<unsigned int>(EPhysicalButton::RB)) |
          (1u << static_cast<unsigned int>(EPhysicalButton::Guide)) |
-         (1u << static_cast<unsigned int>(EPhysicalButton::Share)) |
          (1u << static_cast<unsigned int>(EPhysicalButton::A)) |
          (1u << static_cast<unsigned int>(EPhysicalButton::B)) |
          (1u << static_cast<unsigned int>(EPhysicalButton::X)) |
-         (1u << static_cast<unsigned int>(EPhysicalButton::Y)));
+         (1u << static_cast<unsigned int>(EPhysicalButton::Y)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::Misc1)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::Touchpad)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::RightPaddle1)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::LeftPaddle1)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::RightPaddle2)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::LeftPaddle2)));
+
+    /// Pre-defined constant representing the buttons an SDL gamepad backend can report: the
+    /// standard set plus Guide, Misc1, Touchpad, and the four paddles.
+    inline constexpr unsigned int kPhysicalCapabilitiesSdlButtons =
+        (kPhysicalCapabilitiesStandardXInputButtons |
+         (1u << static_cast<unsigned int>(EPhysicalButton::Guide)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::Misc1)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::Touchpad)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::RightPaddle1)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::LeftPaddle1)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::RightPaddle2)) |
+         (1u << static_cast<unsigned int>(EPhysicalButton::LeftPaddle2)));
+
+    static_assert(
+        static_cast<unsigned int>(EPhysicalButton::Count) <= 32,
+        "Physical button masks no longer fit into 32 bits.");
 
     /// Pre-defined constant representing the standard set of force feedback actuators, as
     /// documented in the XInput API, supported in a physical controller capabilities data

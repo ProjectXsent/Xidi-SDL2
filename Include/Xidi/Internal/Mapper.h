@@ -73,7 +73,12 @@ namespace Xidi
         std::unique_ptr<const IElementMapper> buttonLS = nullptr;
         std::unique_ptr<const IElementMapper> buttonRS = nullptr;
         std::unique_ptr<const IElementMapper> buttonGuide = nullptr;
-        std::unique_ptr<const IElementMapper> buttonShare = nullptr;
+        std::unique_ptr<const IElementMapper> buttonMisc1 = nullptr;
+        std::unique_ptr<const IElementMapper> buttonTouchpad = nullptr;
+        std::unique_ptr<const IElementMapper> buttonRightPaddle1 = nullptr;
+        std::unique_ptr<const IElementMapper> buttonLeftPaddle1 = nullptr;
+        std::unique_ptr<const IElementMapper> buttonRightPaddle2 = nullptr;
+        std::unique_ptr<const IElementMapper> buttonLeftPaddle2 = nullptr;
       };
 
       /// Physical force feedback actuator mappers, one per force feedback actuator.

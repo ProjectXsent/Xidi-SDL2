@@ -692,7 +692,12 @@ namespace Xidi
              {L"ButtonLS", ELEMENT_MAP_INDEX_OF(buttonLS)},
              {L"ButtonRS", ELEMENT_MAP_INDEX_OF(buttonRS)},
              {L"ButtonGuide", ELEMENT_MAP_INDEX_OF(buttonGuide)},
-             {L"ButtonShare", ELEMENT_MAP_INDEX_OF(buttonShare)}};
+             {L"ButtonMisc1", ELEMENT_MAP_INDEX_OF(buttonMisc1)},
+             {L"ButtonTouchpad", ELEMENT_MAP_INDEX_OF(buttonTouchpad)},
+             {L"ButtonRightPaddle1", ELEMENT_MAP_INDEX_OF(buttonRightPaddle1)},
+             {L"ButtonLeftPaddle1", ELEMENT_MAP_INDEX_OF(buttonLeftPaddle1)},
+             {L"ButtonRightPaddle2", ELEMENT_MAP_INDEX_OF(buttonRightPaddle2)},
+             {L"ButtonLeftPaddle2", ELEMENT_MAP_INDEX_OF(buttonLeftPaddle2)}};
 
         const auto controllerElementIter = kControllerElementStrings.find(controllerElementString);
         if (kControllerElementStrings.cend() == controllerElementIter)

@@ -30,7 +30,7 @@ namespace Xidi
     /// Maximum number of controllers this backend will expose. SDL itself has no such limit, but
     /// the rest of Xidi is built around a small fixed number of physical controller slots, so this
     /// is kept at the XInput value. Raising it only requires that the rest of Xidi agree.
-    static constexpr TPhysicalControllerIndex kMaxControllerCount = 4;
+    static constexpr TPhysicalControllerIndex kMaxControllerCount = 16;
 
     /// Duration, in milliseconds, requested for each rumble command. SDL rumble effects expire on
     /// their own, so the requested duration simply needs to comfortably outlast the interval
@@ -61,6 +61,13 @@ namespace Xidi
         {SDL_GAMEPAD_BUTTON_EAST, EPhysicalButton::B},
         {SDL_GAMEPAD_BUTTON_WEST, EPhysicalButton::X},
         {SDL_GAMEPAD_BUTTON_NORTH, EPhysicalButton::Y},
+        {SDL_GAMEPAD_BUTTON_GUIDE, EPhysicalButton::Guide},
+        {SDL_GAMEPAD_BUTTON_MISC1, EPhysicalButton::Misc1},
+        {SDL_GAMEPAD_BUTTON_TOUCHPAD, EPhysicalButton::Touchpad},
+        {SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1, EPhysicalButton::RightPaddle1},
+        {SDL_GAMEPAD_BUTTON_LEFT_PADDLE1, EPhysicalButton::LeftPaddle1},
+        {SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2, EPhysicalButton::RightPaddle2},
+        {SDL_GAMEPAD_BUTTON_LEFT_PADDLE2, EPhysicalButton::LeftPaddle2},
     };
 
     /// Negates an SDL axis reading without overflowing. SDL reports positive values for down and
@@ -341,7 +348,7 @@ namespace Xidi
     return {
         .stick = kPhysicalCapabilitiesAllAnalogSticks,
         .trigger = kPhysicalCapabilitiesAllAnalogTriggers,
-        .button = kPhysicalCapabilitiesStandardXInputButtons,
+        .button = kPhysicalCapabilitiesSdlButtons,
         .forceFeedbackActuator = kPhysicalCapabilitiesStandardXInputForceFeedbackActuators};
   }
 
@@ -356,16 +363,16 @@ namespace Xidi
     SDL_Gamepad* const controller = GetControllerSet().GetController(physicalControllerIndex);
     if (nullptr == controller) return {.deviceStatus = EPhysicalDeviceStatus::NotConnected};
 
-    // Guide and Share are deliberately left out. The capabilities reported above are the standard
-    // XInput set, which does not include them, and reporting a button outside of the advertised
-    // capabilities would confuse the mapping layer.
-    uint16_t buttonState = 0;
+    // Every button in kButtonMap must also be present in the capabilities reported by
+    // GetCapabilities (kPhysicalCapabilitiesSdlButtons), otherwise the mapping layer would see a
+    // button outside of the advertised set. SDL_GetGamepadButton simply returns false for buttons
+    // the controller does not have, so unsupported ones stay released.
+    uint32_t buttonState = 0;
 
     for (const auto& buttonMapping : kButtonMap)
     {
       if (true == SDL_GetGamepadButton(controller, buttonMapping.sdlButton))
-        buttonState |= static_cast<uint16_t>(
-            1u << static_cast<unsigned int>(buttonMapping.physicalButton));
+        buttonState |= (1u << static_cast<unsigned int>(buttonMapping.physicalButton));
     }
 
     return {

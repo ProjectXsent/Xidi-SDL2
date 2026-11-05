@@ -310,7 +310,12 @@ namespace Xidi
       requirements[EPhysicalButton::LS] = (nullptr != elements.buttonLS);
       requirements[EPhysicalButton::RS] = (nullptr != elements.buttonRS);
       requirements[EPhysicalButton::Guide] = (nullptr != elements.buttonGuide);
-      requirements[EPhysicalButton::Share] = (nullptr != elements.buttonShare);
+      requirements[EPhysicalButton::Misc1] = (nullptr != elements.buttonMisc1);
+      requirements[EPhysicalButton::Touchpad] = (nullptr != elements.buttonTouchpad);
+      requirements[EPhysicalButton::RightPaddle1] = (nullptr != elements.buttonRightPaddle1);
+      requirements[EPhysicalButton::LeftPaddle1] = (nullptr != elements.buttonLeftPaddle1);
+      requirements[EPhysicalButton::RightPaddle2] = (nullptr != elements.buttonRightPaddle2);
+      requirements[EPhysicalButton::LeftPaddle2] = (nullptr != elements.buttonLeftPaddle2);
 
       requirements[EForceFeedbackActuator::LeftMotor] = forceFeedbackActuators.leftMotor.isPresent;
       requirements[EForceFeedbackActuator::RightMotor] =
@@ -908,6 +913,48 @@ namespace Xidi
             physicalState[EPhysicalButton::RS],
             SourceIdentifierForElementMapper(
                 sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonRS)));
+      if (nullptr != elements.named.buttonGuide)
+        elements.named.buttonGuide->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::Guide],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonGuide)));
+      if (nullptr != elements.named.buttonMisc1)
+        elements.named.buttonMisc1->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::Misc1],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonMisc1)));
+      if (nullptr != elements.named.buttonTouchpad)
+        elements.named.buttonTouchpad->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::Touchpad],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonTouchpad)));
+      if (nullptr != elements.named.buttonRightPaddle1)
+        elements.named.buttonRightPaddle1->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::RightPaddle1],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonRightPaddle1)));
+      if (nullptr != elements.named.buttonLeftPaddle1)
+        elements.named.buttonLeftPaddle1->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::LeftPaddle1],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonLeftPaddle1)));
+      if (nullptr != elements.named.buttonRightPaddle2)
+        elements.named.buttonRightPaddle2->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::RightPaddle2],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonRightPaddle2)));
+      if (nullptr != elements.named.buttonLeftPaddle2)
+        elements.named.buttonLeftPaddle2->ContributeFromButtonValue(
+            controllerState,
+            physicalState[EPhysicalButton::LeftPaddle2],
+            SourceIdentifierForElementMapper(
+                sourceControllerIdentifier, ELEMENT_MAP_INDEX_OF(buttonLeftPaddle2)));
 
       // Once all contributions have been committed, saturate all axis values at the extreme ends of
       // the allowed range. Doing this at the end means that intermediate contributions are computed

@@ -81,6 +81,12 @@ namespace Xidi
       B14,
       B15,
       B16,
+      B17,
+      B18,
+      B19,
+      B20,
+      B21,
+      B22,
 
       /// Sentinel value, total number of enumerators
       Count
