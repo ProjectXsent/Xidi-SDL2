@@ -25,12 +25,13 @@ Xidi is not useful if:
 
 - The problem arises with controllers that are not XInput-based controllers. Xidi will not communicate with non-XInput controllers. But with v5.0.0, it is now possible by using SDL Plugins or this repo.
 
-- The problem arises from an older non-XInput controller being used with an XInput-based game. This is the inverse of the problem Xidi solves, for which solution like the [Xbox 360 Controller Emulator](https://www.x360ce.com/) or [InputFusion](https://github.com/xan105/InputFusion) is needed.
+- The problem arises from an older non-XInput controller being used with an XInput-based game. This is the inverse of the problem Xidi solves, for which solution like the [Xbox 360 Controller Emulator](https://www.x360ce.com/) or [XInput SDL Wrapper](https://github.com/ProjectXsent/xinput-sdl-wrapper) is needed.
 
 
 ## Further Reading
 
 See the [Wiki](https://github.com/samuelgr/Xidi/wiki) for complete documentation.
+See also [Xidi SDL CMake](https://github.com/ProjectXsent/Xidi-SDL-CMake) for building using CMake.
 
 ## Credits
 - Samuelgr ([Xidi v5.0.0](https://github.com/samuelgr/Xidi))
